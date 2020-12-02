@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Whack a mole</title>
+<link rel="stylesheet" type="text/css" href="whack.css">
+</head>
+<body style="background-color: #e0f7fa;" class="back" onload="highscore1()">
+<div class="container-fluid">
+<div><h1 style="color: #ffc107;text-align: center;font-size: 70px;"><b>Whack A Mole...</b></h1></div>
+
+<div class="row" style="display: inline-flex;margin-left: 15%;">
+	<label id="" style="font-size: 40px;color:#ffc107;background-color: black;text-align: center;border-radius: 10px;margin-right: 50%;">High Score <span id="highscore"></span></label>
+	<button id="go" onclick="peep()" style="height:13vh;font-size: 40px;color:#ffc107;background-color: black;text-align: center;border-radius: 10px;">start</button>
+	<button id="go" onclick="stop()" style="height:13vh;font-size: 40px;color:#ffc107;background-color: black;text-align: center;margin-left: 50%;border-radius: 10px;">stop</button>
+	<label id="score" style="font-size: 40px;color:#ffc107;background-color: black;text-align: center;margin-left: 30%;border-radius: 10px;">Score </label>
+	
+</div>
+<div class="container " id="game" style="padding-bottom: 60px;">
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+	<div class="x">
+		<div class="wrapper">
+			<div class="hole"></div>
+			<div class="y"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	
+var i = 0;
+var index = 0;
+var score = 0;
+var highscore=getCookie('score');
+function highscore1(){
+	document.getElementById('highscore').innerHTML=highscore;
+}
+function peep() {
+	
+	var div = document.querySelectorAll('.y');
+	const v = document.querySelectorAll('.x');
+	const a = v.length;
+
+	function random() {
+		div.forEach(classname => {
+		classname.classList.remove('mole')
+		});
+		i = Math.floor(Math.random() * 6)
+		div[i].classList.add("mole")
+		hitid = div[i].id
+	}
+	var interval = setInterval(() => random(), 1000);
+
+
+	index++;
+	if (index > 10) {
+	clearInterval(interval);
+	}
+	div.forEach(i => {
+	i.addEventListener("mouseup", () => {
+	if (i.id === hitid) {
+	score++
+	document.getElementById('score').innerHTML = " Score  " + score;
+	}
+	})
+	})
+}
+
+function stop(){
+alert("your score : "+score);
+
+debugger;
+if (score > highscore) {
+	setCookie(score);
+}
+}
+
+function setCookie(score) 
+{
+ document.cookie="score="+score;
+ }
+function getCookie(score)
+ {
+var name = score + "=";
+var decodedCookie = decodeURIComponent(document.cookie);
+var ca = decodedCookie.split(';');
+for(var i = 0; i <ca.length; i++) {
+var c = ca[i];
+ while (c.charAt(0) == ' ') {
+ c = c.substring(1);
+ }
+if (c.indexOf(name) == 0) {
+ return c.substring(name.length, c.length);
+ }
+ }
+ return "";
+}
+ 
+ 
+</script>
+</body>
+
+</html>
